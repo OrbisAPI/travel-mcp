@@ -1,17 +1,31 @@
 # Orbis Travel MCP ✈️
 
-> 500+ travel APIs for AI agents. Flights, hotels, destinations — pay per call with USDC on Base.
+> Real airport, flight, hotel, and travel data APIs for AI agents. Pay per call with USDC on Base — no API keys, no accounts, no subscriptions.
 
 [![MCP](https://img.shields.io/badge/MCP-StreamableHTTP-blue)](https://orbisapi.com/api/mcp/travel)
-[![Payment](https://img.shields.io/badge/payment-x402%20USDC-green)](https://x402.org)
+[![x402](https://img.shields.io/badge/payment-x402%20USDC-green)](https://x402.org)
 
-## What's Inside
+## What's Actually In Here
 
-- **Flights** — search, pricing, availability, routes, airline data
-- **Hotels** — search, availability, pricing, reviews
-- **Destinations** — country/city info, visa requirements, travel advisories
-- **Airports** — IATA codes, schedules, delays, terminal maps
-- **Currency** — exchange rates for travel planning
+These are the most-called APIs in this domain on Orbis:
+
+| API | Calls | What it does |
+|-----|-------|-------------|
+| [Airport Database API](https://orbisapi.com/marketplace/airport-database-api-dc0fd2) | 220 | Full database of airports worldwide with IATA codes |
+| [Airport Codes API](https://orbisapi.com/marketplace/airport-codes-api-9f9dc4) | 170 | Look up airports by IATA/ICAO code or city |
+| [Airport Code API](https://orbisapi.com/marketplace/airport-code-api-1acd94) | 48 | Resolve airport codes to names and locations |
+| [Booking.com Hotels API](https://orbisapi.com/marketplace/booking-com-hotels-api-1295a2) | 46 | Search hotels with availability and pricing |
+| [Airline Lookup](https://orbisapi.com/marketplace/airline-lookup-f81514) | 43 | Look up airline details by IATA code |
+| [Airport Code Lookup API](https://orbisapi.com/marketplace/airport-code-lookup-api-2292de) | 41 | Detailed airport info from any code |
+| [Hotel Availability](https://orbisapi.com/marketplace/hotel-availability-90e467) | 40 | Check hotel availability for dates and location |
+| [Airport Info Lookup](https://orbisapi.com/marketplace/airport-info-lookup-52b9e2) | 35 | Full airport details: terminals, gates, facilities |
+| [Currency Exchange Reference API](https://orbisapi.com/marketplace/currency-exchange-reference-api-8a0a7d) | 31 | Exchange rates for travel budget planning |
+| [Travel Destinations Guide](https://orbisapi.com/marketplace/travel-destinations-guide-89bd6f) | 26 | Destination info, highlights, and travel tips |
+| [Flight Search API](https://orbisapi.com/marketplace/flight-search-api-c82323) | 23 | Search available flights between cities |
+| [Seat Pitch Comparator API](https://orbisapi.com/marketplace/seat-pitch-comparator-api-38034e) | 21 | Compare legroom across airlines and seat classes |
+| [Visa Requirement Lookup](https://orbisapi.com/marketplace/visa-requirement-lookup-87d140) | 19 | Check visa requirements between countries |
+| [Baggage Fee Calculator API](https://orbisapi.com/marketplace/baggage-fee-calculator-api-925072) | 19 | Calculate baggage fees for any airline |
+| [Flight Carbon API](https://orbisapi.com/marketplace/flight-carbon-api-254095) | 17 | Estimate carbon footprint for a flight route |
 
 ## Quick Start
 
@@ -54,11 +68,14 @@ mcpServers:
 
 Once connected, try:
 
-- *"Find flights from NYC to London in July under $800"*
-- *"What hotels are available in Tokyo for 3 nights in August?"*
-- *"Do I need a visa to visit Japan from the US?"*
-- *"What's the current exchange rate from USD to EUR?"*
-- *"What are the top tourist attractions in Barcelona?"*
+- *"What's the IATA code for Heathrow and which terminal does British Airways use?"*
+- *"Find hotels in Tokyo available August 10–15 under $200/night"*
+- *"Do I need a visa to visit Japan if I have a US passport?"*
+- *"Search for flights from JFK to LHR next Friday"*
+- *"Compare legroom between economy seats on Delta vs United vs American"*
+- *"What's the baggage fee for a checked bag on Southwest Airlines?"*
+- *"What's the carbon footprint of a round trip from NYC to London?"*
+- *"What's the USD to JPY exchange rate for my Tokyo trip budget?"*
 
 ## Direct x402 Usage (Node.js)
 
@@ -72,28 +89,16 @@ const account = privateKeyToAccount(process.env.WALLET_PRIVATE_KEY);
 const walletClient = createWalletClient({ account, chain: base, transport: http() });
 const fetch = wrapFetchWithPayment(globalThis.fetch, walletClient);
 
-// Search for travel APIs and make a call
+// Airport database — 220 real calls on Orbis
 const resp = await fetch(
-  "https://orbisapi.com/api/proxy/flight-search-api/search",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ origin: "JFK", destination: "LHR", date: "2025-08-15" }),
-  }
+  "https://orbisapi.com/api/proxy/airport-database-api-dc0fd2/lookup",
+  { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code: "JFK" }) }
 );
 console.log(await resp.json());
 ```
 
 See `example.mjs` for a full working script.
-
-## MCP Details
-
-| | |
-|---|---|
-| **MCP URL** | `https://orbisapi.com/api/mcp/travel` |
-| **Protocol** | StreamableHTTP + SSE |
-| **Payment** | x402 USDC on Base (~$0.02–$0.05/call) |
-| **Tools** | `browse_apis`, `call_api` |
 
 ## All Orbis Domain MCPs
 
@@ -103,7 +108,7 @@ See `example.mjs` for a full working script.
 | 🔍 Research & Data | `https://orbisapi.com/api/mcp/research` |
 | 🛒 Commerce & Retail | `https://orbisapi.com/api/mcp/commerce` |
 | ✈️ Travel | `https://orbisapi.com/api/mcp/travel` |
-| 🌐 All 20,200+ APIs | `https://orbisapi.com/api/mcp` |
+| 🌐 All 20,000+ APIs | `https://orbisapi.com/api/mcp` |
 
 ---
 
